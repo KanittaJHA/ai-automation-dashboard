@@ -99,14 +99,15 @@ export default function OCRPage() {
 					ocrResult.vat_amount ?? ocrResult.vat ?? ocrResult.VAT ?? 0,
 				),
 				grandTotal: Number(ocrResult.grand_total ?? ocrResult.grandTotal ?? 0),
-				valid:
-					Math.abs(
-						Number(ocrResult.subtotal ?? 0) +
-							Number(
-								ocrResult.vat_amount ?? ocrResult.vat ?? ocrResult.VAT ?? 0,
-							) -
-							Number(ocrResult.grand_total ?? ocrResult.grandTotal ?? 0),
-					) < 0.01,
+				valid: (() => {
+					const s = Number(ocrResult.subtotal ?? ocrResult.Subtotal ?? 0);
+					const d = Number(ocrResult.discount ?? 0);
+					const v = Number(ocrResult.vat_amount ?? ocrResult.vat ?? ocrResult.VAT ?? ocrResult.tax ?? ocrResult.Tax ?? 0);
+					const g = Number(ocrResult.grand_total ?? ocrResult.GrandTotal ?? ocrResult.grandTotal ?? ocrResult.total ?? ocrResult.Total ?? 0);
+					const vatExclusive = Math.abs(s - d + v - g) < 0.5;
+					const vatInclusive = Math.abs(s - d - g) < 0.5 && v > 0;
+					return vatExclusive || vatInclusive;
+				})(),
 			};
 
 			setHistory((prev) => [newItem, ...prev]);
