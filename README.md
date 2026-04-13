@@ -1,5 +1,7 @@
 # AI Automation Dashboard — OCR to JSON
 
+> **Live Demo**: [https://ai-automation-dashboard-seven.vercel.app](https://ai-automation-dashboard-seven.vercel.app)
+
 Next.js dashboard that extracts structured JSON from invoices and receipts using AI Vision + n8n workflow validation.
 
 ## Architecture
@@ -80,9 +82,19 @@ n8n-workflows/
   ocr-sample-output.json   # Example output JSON
 ```
 
-## Sample Output
+## Deliverables (สิ่งที่ส่งมอบ)
 
-See [`n8n-workflows/ocr-sample-output.json`](n8n-workflows/ocr-sample-output.json) for a complete example with validation results.
+| # | รายการ | Path |
+|---|--------|------|
+| 1 | n8n workflow export | [`n8n-workflows/ocr-to-json.json`](n8n-workflows/ocr-to-json.json) |
+| 2 | ตัวอย่างผลลัพธ์ JSON | [`n8n-workflows/ocr-sample-output.json`](n8n-workflows/ocr-sample-output.json) |
+| 3 | n8n execution screenshots | [`n8n-workflows/screenshots/`](n8n-workflows/screenshots/) |
+| 4 | Environment example | [`.env.example`](.env.example) |
+| 5 | เว็บ Demo (Next.js) | [`app/`](app/) — deploy บน Vercel |
+
+## OCR Result (ผลลัพธ์จริง)
+
+![OCR Result](n8n-workflows/screenshots/Screenshot%202569-04-13%20at%2023.05.27.png)
 
 ## Tech Stack
 

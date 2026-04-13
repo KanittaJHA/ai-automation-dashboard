@@ -9,7 +9,7 @@ export default function HeroSection() {
 		<section
 			style={{
 				textAlign: "center",
-				marginBottom: 10,
+				marginBottom: 60,
 				position: "relative",
 			}}
 		>

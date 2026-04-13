@@ -167,7 +167,7 @@ export default function OCRPage() {
 			</div>
 
 			{/* Upload + Results */}
-			<div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+			<div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6 items-stretch">
 				<div className="space-y-6">
 					<UploadArea
 						onFileSelect={handleFileSelect}

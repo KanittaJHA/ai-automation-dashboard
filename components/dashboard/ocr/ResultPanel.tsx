@@ -20,7 +20,7 @@ export default function ResultPanel({ result, isLoading }: ResultPanelProps) {
 	};
 
 	return (
-		<div className="bg-white/5 rounded-2xl border border-white/10 p-6">
+		<div className="bg-white/5 rounded-2xl border border-white/10 p-6 h-full flex flex-col">
 			<div className="flex items-center justify-between mb-4">
 				<h3 className="text-sm font-semibold text-white">Extracted JSON</h3>
 				{result && (
@@ -43,7 +43,7 @@ export default function ResultPanel({ result, isLoading }: ResultPanelProps) {
 					</div>
 				</div>
 			) : result ? (
-				<pre className="bg-black/30 rounded-xl p-4 text-xs text-gray-300 overflow-auto max-h-80 font-mono">
+				<pre className="bg-black/30 rounded-xl p-4 text-xs text-gray-300 overflow-auto flex-1 font-mono">
 					{JSON.stringify(result, null, 2)}
 				</pre>
 			) : (

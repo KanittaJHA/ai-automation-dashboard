@@ -1,60 +1,29 @@
 {
-  "success": true,
-  "is_valid": true,
-  "data": {
-    "document_type": "tax_invoice",
-    "document_number": "INV-2026-0042",
-    "date": "2026-04-13",
-    "vendor_name": "บริษัท ไทย ซัพพลาย จำกัด",
-    "vendor_tax_id": "0105556123456",
-    "buyer_name": "บริษัท เอบีซี จำกัด",
-    "buyer_tax_id": "0105561234567",
-    "items": [
-      {
-        "description": "อุปกรณ์สำนักงาน",
-        "quantity": 10,
-        "unit_price": 250,
-        "amount": 2500
-      },
-      {
-        "description": "กระดาษ A4",
-        "quantity": 5,
-        "unit_price": 180,
-        "amount": 900
-      },
-      {
-        "description": "หมึกพิมพ์",
-        "quantity": 2,
-        "unit_price": 750,
-        "amount": 1500
-      }
-    ],
-    "subtotal": 4900,
-    "discount": 0,
-    "vat_rate": 7,
-    "vat_amount": 343,
-    "grand_total": 5243,
-    "currency": "THB"
-  },
-  "validation": {
-    "status": "PASSED",
-    "checks": [
-      {
-        "field": "grand_total",
-        "status": "OK",
-        "message": "Total calculation matches"
-      },
-      {
-        "field": "vat_amount",
-        "status": "OK",
-        "message": "VAT calculation matches"
-      },
-      {
-        "field": "items_subtotal",
-        "status": "OK",
-        "message": "Items sum matches subtotal"
-      }
-    ]
-  },
-  "processed_at": "2026-04-13T14:30:00.000Z"
+  "document_type": "receipt",
+  "document_number": "CA2021090002",
+  "date": "2021-09-22",
+  "vendor_name": "Cozy Shop on Shopee",
+  "vendor_tax_id": "0105511222333",
+  "buyer_name": null,
+  "buyer_tax_id": null,
+  "items": [
+    {
+      "description": "FlowAccount - Bundle",
+      "quantity": 1,
+      "unit_price": 10,
+      "amount": 10
+    },
+    {
+      "description": "คู่จัดส่ง",
+      "quantity": 1,
+      "unit_price": 23,
+      "amount": 23
+    }
+  ],
+  "subtotal": 33,
+  "discount": 2,
+  "vat_rate": 7,
+  "vat_amount": 2.15,
+  "grand_total": 31,
+  "currency": "THB"
 }
