@@ -14,8 +14,8 @@ export default function StatsCard({
   value,
   subtitle,
   icon: Icon,
-  iconColor = "text-[#A965FF]",
-  iconBg = "bg-[#A965FF]/10",
+  iconColor = "text-[#7c3aed]",
+  iconBg = "bg-[#7c3aed]/10",
 }: StatsCardProps) {
   return (
     <div className="bg-white/5 rounded-2xl border border-white/10 p-6">

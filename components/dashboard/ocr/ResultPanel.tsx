@@ -27,7 +27,7 @@ export default function ResultPanel({ result, isLoading }: ResultPanelProps) {
 					<button
 						type="button"
 						onClick={handleCopy}
-						className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-[#A965FF] transition-colors"
+						className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-[#7c3aed] transition-colors"
 					>
 						{copied ? <Check size={14} /> : <Copy size={14} />}
 						{copied ? "Copied" : "Copy"}
@@ -38,7 +38,7 @@ export default function ResultPanel({ result, isLoading }: ResultPanelProps) {
 			{isLoading ? (
 				<div className="flex items-center justify-center flex-1 pb-16">
 					<div className="flex flex-col items-center gap-3">
-						<div className="w-8 h-8 border-2 border-[#A965FF]/20 border-t-[#A965FF] rounded-full animate-spin" />
+						<div className="w-8 h-8 border-2 border-[#7c3aed]/20 border-t-[#7c3aed] rounded-full animate-spin" />
 						<p className="text-sm text-gray-400">Processing OCR...</p>
 					</div>
 				</div>

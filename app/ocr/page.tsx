@@ -139,31 +139,31 @@ export default function OCRPage() {
 					title="Total Processed"
 					value={totalProcessed}
 					icon={FileCheck}
-					iconColor="text-[#A965FF]"
-					iconBg="bg-[#A965FF]/10"
+					iconColor="text-[#7c3aed]"
+					iconBg="bg-[#7c3aed]/10"
 				/>
 				<StatsCard
 					title="Success Rate"
 					value={`${successRate}%`}
 					icon={TrendingUp}
-					iconColor="text-[#A965FF]"
-					iconBg="bg-[#A965FF]/10"
+					iconColor="text-[#7c3aed]"
+					iconBg="bg-[#7c3aed]/10"
 				/>
 				<StatsCard
 					title="Last Processed"
 					value={lastProcessed.split(" ")[1] ?? "N/A"}
 					subtitle={lastProcessed.split(" ")[0]}
 					icon={Clock}
-					iconColor="text-[#A965FF]"
-					iconBg="bg-[#A965FF]/10"
+					iconColor="text-[#7c3aed]"
+					iconBg="bg-[#7c3aed]/10"
 				/>
 				<StatsCard
 					title="Avg. Processing"
 					value="1.2s"
 					subtitle="Per document"
 					icon={Zap}
-					iconColor="text-[#A965FF]"
-					iconBg="bg-[#A965FF]/10"
+					iconColor="text-[#7c3aed]"
+					iconBg="bg-[#7c3aed]/10"
 				/>
 			</div>
 
@@ -184,7 +184,7 @@ export default function OCRPage() {
 							disabled={!selectedFile || isProcessing}
 							className={`flex-1 py-3.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
 								selectedFile && !isProcessing
-									? "bg-[#A965FF] hover:bg-[#9550E8] text-white shadow-lg shadow-[#A965FF]/25"
+									? "bg-linear-to-r from-[#7c3aed] to-[#2563eb] hover:from-[#6d28d9] hover:to-[#1d4ed8] text-white shadow-lg shadow-[#7c3aed]/25"
 									: "bg-white/10 text-gray-500 cursor-not-allowed"
 							}`}
 						>

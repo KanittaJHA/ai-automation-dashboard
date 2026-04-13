@@ -74,11 +74,11 @@ export default function UploadArea({
               className="w-20 h-20 object-cover rounded-lg"
             />
           ) : (
-            <div className="w-20 h-20 bg-[#A965FF]/10 rounded-lg flex items-center justify-center">
+            <div className="w-20 h-20 bg-[#7c3aed]/10 rounded-lg flex items-center justify-center">
               {isPdf ? (
-                <FileText size={28} className="text-[#A965FF]" />
+                <FileText size={28} className="text-[#7c3aed]" />
               ) : (
-                <ImageIcon size={28} className="text-[#A965FF]" />
+                <ImageIcon size={28} className="text-[#7c3aed]" />
               )}
             </div>
           )}
@@ -108,12 +108,12 @@ export default function UploadArea({
         onClick={() => inputRef.current?.click()}
         className={`w-full border-2 border-dashed rounded-xl p-10 text-center cursor-pointer transition-all duration-200 ${
           isDragging
-            ? "border-[#A965FF] bg-[#A965FF]/5"
-            : "border-white/20 hover:border-[#A965FF]/50 hover:bg-white/5"
+            ? "border-[#7c3aed] bg-[#7c3aed]/5"
+            : "border-white/20 hover:border-[#7c3aed]/50 hover:bg-white/5"
         }`}
       >
-        <div className="w-12 h-12 rounded-xl bg-[#A965FF]/10 mx-auto mb-3 flex items-center justify-center">
-          <Upload size={22} className="text-[#A965FF]" />
+        <div className="w-12 h-12 rounded-xl bg-[#7c3aed]/10 mx-auto mb-3 flex items-center justify-center">
+          <Upload size={22} className="text-[#7c3aed]" />
         </div>
         <p className="text-sm font-medium text-white">
           Drag & drop your file here

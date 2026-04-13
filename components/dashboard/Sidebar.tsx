@@ -20,11 +20,11 @@ export default function Sidebar() {
       {/* Logo */}
       <div className="px-5 py-5 border-b border-white/10">
         <Link href="/" className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-xl bg-[#A965FF] flex items-center justify-center">
+          <div className="w-9 h-9 rounded-xl bg-linear-to-br from-[#7c3aed] to-[#2563eb] flex items-center justify-center">
             <span className="text-white font-bold text-sm">AX</span>
           </div>
           <span className="text-white text-lg font-bold tracking-tight">
-            Auto<span className="text-[#A965FF]">X</span>
+            Auto<span className="text-[#7c3aed]">X</span>
           </span>
         </Link>
       </div>
@@ -43,7 +43,7 @@ export default function Sidebar() {
                   href={item.href}
                   className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
                     isActive
-                      ? "bg-[#A965FF] text-white shadow-md shadow-[#A965FF]/25"
+                      ? "bg-linear-to-r from-[#7c3aed] to-[#2563eb] text-white shadow-md shadow-[#7c3aed]/25"
                       : "text-gray-400 hover:text-white hover:bg-white/5"
                   }`}
                 >
@@ -62,7 +62,7 @@ export default function Sidebar() {
       {/* Footer */}
       <div className="px-4 py-4 border-t border-white/10">
         <div className="flex items-center gap-3 px-1">
-          <div className="w-8 h-8 rounded-full bg-linear-to-br from-[#A965FF] to-[#F79ACC] flex items-center justify-center">
+          <div className="w-8 h-8 rounded-full bg-linear-to-br from-[#7c3aed] to-[#2563eb] flex items-center justify-center">
             <span className="text-white text-xs font-semibold">N</span>
           </div>
           <div>
