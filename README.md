@@ -95,14 +95,14 @@ n8n-workflows/
 ## Demo Screenshots
 
 ### Landing Page
-![Landing Page](n8n-workflows/screenshots/demo/Screenshot%202569-04-13%20at%2023.18.57.png)
+![Landing Page](n8n-workflows/screenshots/demo/landing-page.png)
 
 ### OCR Dashboard
-![OCR Dashboard](n8n-workflows/screenshots/demo/Screenshot%202569-04-13%20at%2023.19.19.png)
+![OCR Dashboard](n8n-workflows/screenshots/demo/ocr-dashboard.png)
 
 ## OCR Result (ผลลัพธ์จริง)
 
-![OCR Result](n8n-workflows/screenshots/Screenshot%202569-04-13%20at%2023.05.27.png)
+![OCR Result](n8n-workflows/screenshots/ocr-result-json.png)
 
 ## Tech Stack
 
