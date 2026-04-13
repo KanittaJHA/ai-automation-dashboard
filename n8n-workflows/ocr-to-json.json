@@ -1,0 +1,141 @@
+{
+	"name": "OCR → JSON",
+	"nodes": [
+		{
+			"parameters": {
+				"httpMethod": "POST",
+				"path": "ocr",
+				"responseMode": "responseNode",
+				"options": {}
+			},
+			"id": "2fe73616-7d8f-4ac4-8c24-c7723c050471",
+			"name": "Webhook",
+			"type": "n8n-nodes-base.webhook",
+			"typeVersion": 2,
+			"position": [7320, 304],
+			"webhookId": "ocr-webhook"
+		},
+		{
+			"parameters": {
+				"promptType": "define",
+				"text": "={{ 'Review and enrich this invoice data extracted by OCR AI.\\n\\nExtracted JSON:\\n' + JSON.stringify($json.extractedData, null, 2) + '\\n\\nOriginal OCR text for reference:\\n' + ($json.ocrText || 'N/A') }}",
+				"options": {
+					"systemMessage": "You are an invoice data reviewer and enrichment AI agent.\n\nYou receive JSON data extracted from an invoice/receipt by an OCR system, along with the original OCR text.\n\nYour tasks:\n1. REVIEW: Cross-check the extracted values against the OCR text. Fix any incorrect values.\n2. ENRICH: Fill in missing fields (null) if the information exists in the OCR text.\n3. CATEGORIZE: Add an \"expense_category\" field (food, transport, office, shopping, service, other).\n4. CONFIDENCE: Add a \"confidence_score\" field (0.0-1.0) indicating how confident you are in the extraction accuracy.\n5. NORMALIZE: Ensure dates are YYYY-MM-DD, money values are numbers, Thai Buddhist year converted to AD (minus 543).\n\nReturn ONLY a valid JSON object with all original fields plus:\n- \"expense_category\": string\n- \"confidence_score\": number (0.0-1.0)\n\nDo NOT wrap in markdown code blocks. Return raw JSON only."
+				}
+			},
+			"id": "ai-agent",
+			"name": "AI Agent - Data Reviewer",
+			"type": "@n8n/n8n-nodes-langchain.agent",
+			"typeVersion": 1.7,
+			"position": [7544, 304]
+		},
+		{
+			"parameters": {
+				"model": "llama-3.3-70b-versatile",
+				"options": {
+					"temperature": 0.1
+				}
+			},
+			"id": "groq-model",
+			"name": "Groq Chat Model",
+			"type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+			"typeVersion": 1,
+			"position": [7616, 528],
+			"credentials": {
+				"groqApi": {
+					"id": "lg97LecNdH3m7U6T",
+					"name": "Groq account"
+				}
+			}
+		},
+		{
+			"parameters": {
+				"jsCode": "const agentOutput = $input.first().json;\nlet text = agentOutput.output || agentOutput.text || JSON.stringify(agentOutput);\n\n// Try to extract JSON from agent response\nconst jsonMatch = text.match(/```json\\s*([\\s\\S]*?)\\s*```/) || text.match(/```\\s*([\\s\\S]*?)\\s*```/);\nif (jsonMatch) text = jsonMatch[1];\n\nlet ocrResult;\ntry {\n  ocrResult = JSON.parse(text.trim());\n} catch (e) {\n  const objMatch = text.match(/\\{[\\s\\S]*\\}/);\n  if (objMatch) {\n    try { ocrResult = JSON.parse(objMatch[0]); }\n    catch (e2) {\n      // AI Agent failed to return valid JSON — use original extractedData\n      ocrResult = $('Webhook').first().json.extractedData;\n    }\n  } else {\n    ocrResult = $('Webhook').first().json.extractedData;\n  }\n}\n\n// If AI Agent returned nulls, fallback to original\nif (ocrResult && ocrResult.grand_total === null) {\n  const original = $('Webhook').first().json.extractedData;\n  if (original && original.grand_total !== null) {\n    ocrResult = { ...original, expense_category: ocrResult.expense_category || 'other', confidence_score: ocrResult.confidence_score || 0.5 };\n  }\n}\n\nconst validations = [];\nlet isValid = true;\n\nconst subtotal = Number(ocrResult.subtotal) || 0;\nconst discount = Number(ocrResult.discount) || 0;\nconst vatAmount = Number(ocrResult.vat_amount) || 0;\nconst grandTotal = Number(ocrResult.grand_total) || 0;\n\nconst expectedTotal = subtotal - discount + vatAmount;\nconst totalDiff = Math.abs(expectedTotal - grandTotal);\n\nif (totalDiff > 0.5) {\n  validations.push({ field: 'grand_total', status: 'MISMATCH', message: `subtotal(${subtotal}) - discount(${discount}) + vat(${vatAmount}) = ${expectedTotal}, but grand_total = ${grandTotal}`, difference: totalDiff });\n  isValid = false;\n} else {\n  validations.push({ field: 'grand_total', status: 'OK', message: 'Total calculation matches' });\n}\n\nconst vatRate = Number(ocrResult.vat_rate) || 0;\nif (vatRate > 0 && subtotal > 0) {\n  const expectedVat = (subtotal - discount) * (vatRate / 100);\n  const vatDiff = Math.abs(expectedVat - vatAmount);\n  if (vatDiff > 0.5) {\n    validations.push({ field: 'vat_amount', status: 'MISMATCH', message: `Expected VAT ${vatRate}% of ${subtotal - discount} = ${expectedVat.toFixed(2)}, but got ${vatAmount}`, difference: vatDiff });\n    isValid = false;\n  } else {\n    validations.push({ field: 'vat_amount', status: 'OK', message: 'VAT calculation matches' });\n  }\n}\n\nif (ocrResult.items && ocrResult.items.length > 0) {\n  const itemsSum = ocrResult.items.reduce((sum, item) => sum + (Number(item.amount) || 0), 0);\n  const itemsDiff = Math.abs(itemsSum - subtotal);\n  if (itemsDiff > 0.5) {\n    validations.push({ field: 'items_subtotal', status: 'MISMATCH', message: `Sum of items = ${itemsSum}, but subtotal = ${subtotal}`, difference: itemsDiff });\n    isValid = false;\n  } else {\n    validations.push({ field: 'items_subtotal', status: 'OK', message: 'Items sum matches subtotal' });\n  }\n}\n\nconst requiredFields = ['document_number', 'date', 'vendor_name', 'grand_total'];\nfor (const field of requiredFields) {\n  if (ocrResult[field] === null || ocrResult[field] === undefined || ocrResult[field] === '') {\n    validations.push({ field, status: 'MISSING', message: `Required field '${field}' is missing` });\n    isValid = false;\n  }\n}\n\nif (ocrResult.date && !/^\\d{4}-\\d{2}-\\d{2}$/.test(ocrResult.date)) {\n  validations.push({ field: 'date', status: 'FORMAT_ERROR', message: `Date '${ocrResult.date}' is not in YYYY-MM-DD format` });\n  isValid = false;\n}\n\nreturn [{\n  json: {\n    success: true,\n    is_valid: isValid,\n    data: ocrResult,\n    validation: {\n      status: isValid ? 'PASSED' : 'FAILED',\n      checks: validations\n    },\n    processed_at: new Date().toISOString()\n  }\n}];"
+			},
+			"id": "validate",
+			"name": "Validate & Format",
+			"type": "n8n-nodes-base.code",
+			"typeVersion": 2,
+			"position": [7768, 304]
+		},
+		{
+			"parameters": {
+				"respondWith": "json",
+				"responseBody": "={{ JSON.stringify($json) }}",
+				"options": {
+					"responseCode": 200,
+					"responseHeaders": {
+						"entries": [
+							{
+								"name": "Content-Type",
+								"value": "application/json"
+							}
+						]
+					}
+				}
+			},
+			"id": "respond",
+			"name": "Respond to Webhook",
+			"type": "n8n-nodes-base.respondToWebhook",
+			"typeVersion": 1.1,
+			"position": [7992, 304]
+		}
+	],
+	"pinData": {},
+	"connections": {
+		"Webhook": {
+			"main": [
+				[
+					{
+						"node": "AI Agent - Data Reviewer",
+						"type": "main",
+						"index": 0
+					}
+				]
+			]
+		},
+		"Groq Chat Model": {
+			"ai_languageModel": [
+				[
+					{
+						"node": "AI Agent - Data Reviewer",
+						"type": "ai_languageModel",
+						"index": 0
+					}
+				]
+			]
+		},
+		"AI Agent - Data Reviewer": {
+			"main": [
+				[
+					{
+						"node": "Validate & Format",
+						"type": "main",
+						"index": 0
+					}
+				]
+			]
+		},
+		"Validate & Format": {
+			"main": [
+				[
+					{
+						"node": "Respond to Webhook",
+						"type": "main",
+						"index": 0
+					}
+				]
+			]
+		}
+	},
+	"active": false,
+	"settings": {
+		"executionOrder": "v1"
+	},
+	"id": "4bxmKP85NHluiuPi",
+	"tags": [
+		{
+			"name": "OCR"
+		}
+	]
+}

@@ -1,7 +1,6 @@
 "use client";
 
 import FeatureCard from "@/components/landing/FeatureCard";
-import FooterIntegrations from "@/components/landing/FooterIntegrations";
 import Header from "@/components/landing/Header";
 import HeroSection from "@/components/landing/HeroSection";
 
@@ -54,7 +53,7 @@ export default function LandingPage() {
 				style={{
 					position: "relative",
 					margin: "0",
-					padding: "20px 60px 48px",
+					padding: "0 60px 48px",
 				}}
 			>
 				<Header />
@@ -62,7 +61,6 @@ export default function LandingPage() {
 			</div>
 
 			<FeatureCard />
-			<FooterIntegrations />
 		</div>
 	);
 }

@@ -18,8 +18,7 @@ const glassCard: CSSProperties = {
 	border: "1px solid rgba(255,255,255,0.1)",
 	borderRadius: 20,
 	padding: 28,
-	boxShadow:
-		"0 8px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.06)",
+	boxShadow: "0 8px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.06)",
 	backdropFilter: "blur(20px)",
 };
 
@@ -30,7 +29,7 @@ export default function FeatureCard() {
 				position: "relative",
 				display: "flex",
 				justifyContent: "center",
-				padding: "0 60px",
+				padding: "0 60px 32px",
 			}}
 		>
 			<div style={{ width: "100%", maxWidth: 860 }}>
@@ -111,7 +110,7 @@ export default function FeatureCard() {
 							marginBottom: 10,
 						}}
 					>
-						Task 2 & 3: Smart OCR Validation & Property Scraping
+						Task 2: Smart OCR Validation & Data Extraction
 					</h3>
 					<p
 						style={{
@@ -122,8 +121,8 @@ export default function FeatureCard() {
 						}}
 					>
 						Transform unstructured PDF invoices into validated JSON (checking
-						Subtotal + VAT). Continuously scrape property sites to classify
-						listings and detect direct owners.
+						Subtotal + VAT). AI Agent reviews, enriches, and categorizes
+						extracted data automatically.
 					</p>
 
 					{/* Meta row */}
@@ -135,9 +134,7 @@ export default function FeatureCard() {
 							marginBottom: 20,
 						}}
 					>
-						<div
-							style={{ display: "flex", alignItems: "center", gap: 10 }}
-						>
+						<div style={{ display: "flex", alignItems: "center", gap: 10 }}>
 							<div
 								style={{
 									width: 36,
@@ -166,9 +163,7 @@ export default function FeatureCard() {
 							</div>
 						</div>
 
-						<div
-							style={{ display: "flex", alignItems: "center", gap: 20 }}
-						>
+						<div style={{ display: "flex", alignItems: "center", gap: 20 }}>
 							<div
 								style={{
 									display: "flex",
@@ -274,12 +269,9 @@ export default function FeatureCard() {
 								color: "rgba(255,255,255,0.6)",
 							}}
 						>
-							Extract{" "}
-							<span style={{ color: "#38bdf8" }}>Subtotal & VAT</span>{" "}
-							from{" "}
-							<span style={{ color: "#a78bfa" }}>invoice.pdf</span> and
-							scrape{" "}
-							<span style={{ color: "#38bdf8" }}>DDproperty</span>
+							Extract <span style={{ color: "#38bdf8" }}>Subtotal & VAT</span>{" "}
+							from <span style={{ color: "#a78bfa" }}>invoice.pdf</span> and
+							validate <span style={{ color: "#38bdf8" }}>Grand Total</span>
 						</div>
 						<div style={{ display: "flex", flexShrink: 0 }}>
 							{FACE_AVATARS.map((f, i) => (

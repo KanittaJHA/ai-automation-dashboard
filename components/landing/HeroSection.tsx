@@ -1,14 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function HeroSection() {
-	const [triggering, setTriggering] = useState(false);
-
-	function handleTrigger() {
-		setTriggering(true);
-		setTimeout(() => setTriggering(false), 2000);
-	}
+	const router = useRouter();
 
 	return (
 		<section
@@ -44,7 +39,7 @@ export default function HeroSection() {
 			>
 				Let AI Agents Handle the Busywork
 				<br />
-				Automate OCR & Web Scraping
+				Automate OCR & Data Extraction
 			</h2>
 			<p
 				style={{
@@ -56,7 +51,7 @@ export default function HeroSection() {
 				}}
 			>
 				Build powerful n8n workflows. Automatically extract data from
-				receipts with AI Vision, scrape property listings, and trigger
+				receipts with AI Vision, validate invoice totals, and trigger
 				real-time LINE alerts.
 			</p>
 
@@ -70,8 +65,7 @@ export default function HeroSection() {
 			>
 				<button
 					type="button"
-					onClick={handleTrigger}
-					disabled={triggering}
+					onClick={() => router.push("/ocr")}
 					style={{
 						display: "flex",
 						alignItems: "center",
@@ -83,8 +77,7 @@ export default function HeroSection() {
 						color: "#080B1C",
 						borderRadius: 50,
 						border: "none",
-						cursor: triggering ? "not-allowed" : "pointer",
-						opacity: triggering ? 0.6 : 1,
+						cursor: "pointer",
 						transition: "opacity 0.2s",
 					}}
 				>
@@ -103,10 +96,11 @@ export default function HeroSection() {
 							d="M13 10V3L4 14h7v7l9-11h-7z"
 						/>
 					</svg>
-					{triggering ? "Calling Webhook..." : "Run n8n Workflow"}
+					Try OCR Now
 				</button>
 				<button
 					type="button"
+					onClick={() => router.push("/ocr")}
 					style={{
 						padding: "12px 28px",
 						fontSize: 14,
