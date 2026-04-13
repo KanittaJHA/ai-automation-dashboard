@@ -32,8 +32,8 @@ export default function HeroSection() {
 				style={{
 					fontSize: 58,
 					fontWeight: 500,
-					lineHeight: 1.1,
-					letterSpacing: "-2px",
+					lineHeight: 1.2,
+					letterSpacing: "0.1px",
 					marginBottom: 20,
 					position: "relative",
 				}}
@@ -47,13 +47,13 @@ export default function HeroSection() {
 					color: "rgba(255,255,255,0.45)",
 					fontSize: 15,
 					lineHeight: 1.7,
-					maxWidth: 500,
+					maxWidth: 660,
 					margin: "0 auto 36px",
 				}}
 			>
-				Build powerful n8n workflows. Automatically extract data from receipts
-				with AI Vision, validate invoice totals, and trigger real-time LINE
-				alerts.
+				Build powerful n8n workflows. Automatically extract structured data from
+				receipts and invoices with AI Vision, validate totals against VAT
+				calculations, and review with AI Agent for accuracy.
 			</p>
 
 			<div
