@@ -9,6 +9,7 @@ export default function HeroSection() {
 		<section
 			style={{
 				textAlign: "center",
+				paddingTop: 20,
 				marginBottom: 60,
 				position: "relative",
 			}}
@@ -50,9 +51,9 @@ export default function HeroSection() {
 					margin: "0 auto 36px",
 				}}
 			>
-				Build powerful n8n workflows. Automatically extract data from
-				receipts with AI Vision, validate invoice totals, and trigger
-				real-time LINE alerts.
+				Build powerful n8n workflows. Automatically extract data from receipts
+				with AI Vision, validate invoice totals, and trigger real-time LINE
+				alerts.
 			</p>
 
 			<div
