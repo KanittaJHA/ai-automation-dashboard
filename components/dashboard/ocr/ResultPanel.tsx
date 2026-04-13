@@ -36,7 +36,7 @@ export default function ResultPanel({ result, isLoading }: ResultPanelProps) {
 			</div>
 
 			{isLoading ? (
-				<div className="flex items-center justify-center py-16">
+				<div className="flex items-center justify-center flex-1 pb-16">
 					<div className="flex flex-col items-center gap-3">
 						<div className="w-8 h-8 border-2 border-[#A965FF]/20 border-t-[#A965FF] rounded-full animate-spin" />
 						<p className="text-sm text-gray-400">Processing OCR...</p>
